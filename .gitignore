@@ -1,0 +1,39 @@
+node_modules
+dist
+build
+coverage
+.coverage
+.vite
+.tsbuildinfo
+*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Playwright
+playwright-report
+test-results
+.playwright
+
+# SQLite local data (when running outside docker)
+data
+*.db
+*.db-journal
+*.db-wal
+*.db-shm

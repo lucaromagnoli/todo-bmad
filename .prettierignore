@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+coverage
+playwright-report
+test-results
+_bmad
+_bmad-output
+.claude
+package-lock.json
