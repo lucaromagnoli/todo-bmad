@@ -3,6 +3,8 @@ dist
 build
 coverage
 .coverage
+!_bmad-output/**/coverage/
+!_bmad-output/**/coverage
 .vite
 .tsbuildinfo
 *.tsbuildinfo
