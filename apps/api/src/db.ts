@@ -9,8 +9,8 @@ const SCHEMA = `
     id          TEXT PRIMARY KEY,
     text        TEXT NOT NULL CHECK(length(text) BETWEEN 1 AND 500),
     completed   INTEGER NOT NULL DEFAULT 0 CHECK(completed IN (0, 1)),
-    created_at  TEXT NOT NULL DEFAULT (datetime('now')),
-    updated_at  TEXT NOT NULL DEFAULT (datetime('now')),
+    created_at  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+    updated_at  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
     owner_id    TEXT
   );
 

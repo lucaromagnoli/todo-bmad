@@ -100,8 +100,9 @@ describe('todos routes', () => {
       const id = created.body.id;
       const before = created.body.updatedAt;
 
-      // Wait long enough for SQLite's second-precision datetime('now') to advance
-      await new Promise((r) => setTimeout(r, 1100));
+      // ISO 8601 with millisecond precision lets us assert without sleeping;
+      // we just need the strftime('now') to tick to the next ms.
+      await new Promise((r) => setTimeout(r, 5));
 
       const patched = await request(app)
         .patch(`/api/todos/${id}`)
@@ -109,6 +110,7 @@ describe('todos routes', () => {
       expect(patched.status).toBe(200);
       expect(patched.body.completed).toBe(true);
       expect(patched.body.updatedAt >= before).toBe(true);
+      expect(patched.body.updatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+Z$/);
     });
 
     it('toggles back to false', async () => {

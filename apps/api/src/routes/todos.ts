@@ -56,7 +56,7 @@ export function todosRouter(db: Db): Router {
       sets.push('completed = ?');
       params.push(patch.completed ? 1 : 0);
     }
-    sets.push("updated_at = datetime('now')");
+    sets.push("updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')");
     params.push(id);
 
     db.prepare(`UPDATE todos SET ${sets.join(', ')} WHERE id = ?`).run(...params);
