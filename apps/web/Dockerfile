@@ -14,7 +14,9 @@ COPY e2e/package.json e2e/package.json
 RUN npm ci --workspaces --include-workspace-root
 COPY tsconfig.base.json tsconfig.base.json
 COPY apps/web/ apps/web/
-ARG VITE_API_URL=/api
+# Empty string => fetch() uses paths relative to the current origin
+# (the bundle hits '/api/todos' which nginx proxies to the api service).
+ARG VITE_API_URL=
 ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build --workspace=@todo-bmad/web
 
