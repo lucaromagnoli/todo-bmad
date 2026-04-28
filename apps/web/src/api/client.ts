@@ -23,7 +23,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
         ...(init?.headers ?? {}),
       },
     });
-  } catch (e) {
+  } catch {
     throw new ApiError('network_error', 'Could not reach the server', undefined);
   }
 

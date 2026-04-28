@@ -6,7 +6,7 @@
     "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "types": ["vitest/globals", "@testing-library/jest-dom"],
+    "types": ["vitest/globals", "@testing-library/jest-dom", "vite/client"],
     "noEmit": true,
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": true
