@@ -1,0 +1,53 @@
+name: todo-bmad
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: todo-bmad-api:latest
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_PATH: /data/app.db
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    volumes:
+      - todo_data:/data
+    expose:
+      - '3001'
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3001/api/health').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        VITE_API_URL: /api
+    image: todo-bmad-web:latest
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - '${WEB_PORT:-8080}:8080'
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '-', 'http://127.0.0.1:8080/healthz']
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 3s
+    restart: unless-stopped
+
+volumes:
+  todo_data:
+    name: todo_bmad_data
